@@ -1,0 +1,27 @@
+{
+    "name": "jerodev/diggy",
+    "description": "A fluent PHP web scraper",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeroen Deviaene",
+            "email": "jeroen@deviaene.eu"
+        }
+    ],
+    "type": "library",
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^7.4",
+        "guzzlehttp/guzzle": "^7.0",
+        "symfony/css-selector": "^5.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.3",
+        "phpstan/phpstan": "^0.12"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jerodev\\Diggy\\": "src/"
+        }
+    }
+}
