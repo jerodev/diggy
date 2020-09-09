@@ -6,6 +6,7 @@ use Closure;
 use DOMDocument;
 use DOMNodeList;
 use DOMXPath;
+use Generator;
 use Symfony\Component\CssSelector\CssSelectorConverter;
 
 final class NodeCollection implements NodeFilter
@@ -26,28 +27,11 @@ final class NodeCollection implements NodeFilter
 
     public function querySelector(string $selector): NodeFilter
     {
-        return $this->xPath(
-            (new CssSelectorConverter())->toXPath($selector)
-        );
+        return $this->internalQuerySelector($this->documents, $selector);
     }
 
     public function xPath(string $expression): NodeFilter
     {
-        $newDoc = new DOMDocument();
-
-        foreach ($this->documents as $document) {
-            $xpath = new DOMXPath($document);
-            $nodeList = $xpath->query($expression);
-
-            foreach ($nodeList as $node) {
-                $newDoc->appendChild($node);
-            }
-        }
-
-        if ($newDoc->childNodes->length === 0) {
-            return new NullNode();
-        } else {
-            return new self($newDoc->childNodes);
-        }
+        return $this->internalXpath($this->documents, $expression);
     }
 }

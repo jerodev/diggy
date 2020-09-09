@@ -36,22 +36,11 @@ final class SingleNode implements NodeFilter
 
     public function querySelector(string $selector): NodeFilter
     {
-        return $this->xPath(
-            (new CssSelectorConverter())->toXPath($selector)
-        );
+        return $this->internalQuerySelector($this->document, $selector);
     }
 
     public function xPath(string $expression): NodeFilter
     {
-        $xpath = new DOMXPath($this->document);
-        $nodeList = $xpath->query($expression);
-
-        if ($nodeList->count() === 0) {
-            return new NullNode();
-        } else if ($nodeList->count() === 1) {
-            return new self($nodeList[0]);
-        } else {
-            return new NodeCollection($nodeList);
-        }
+        return $this->internalXpath($this->document, $expression);
     }
 }

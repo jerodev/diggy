@@ -8,6 +8,9 @@ namespace Jerodev\Diggy\NodeFilter;
  */
 final class NullNode implements NodeFilter
 {
+    /**
+     * @inheritDoc
+     */
     public function each($selector, ?\Closure $closure = null): array
     {
         return [];
