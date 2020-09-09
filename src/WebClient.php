@@ -2,6 +2,7 @@
 
 namespace Jerodev\Diggy;
 
+use DOMDocument;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 use Jerodev\Diggy\NodeFilter\SingleNode;
@@ -22,8 +23,24 @@ final class WebClient
         $this->client = new Client($config);
     }
 
-    public function request(string $method, string $url): SingleNode
+    public function get(string $url): SingleNode
     {
+        return $this->request('GET', $url);
+    }
 
+    public function post(string $url): SingleNode
+    {
+        return $this->request('POST', $url);
+    }
+
+    private function request(string $method, string $url): SingleNode
+    {
+        $response = $this->client->request($method, $url);
+        $content = $response->getBody()->getContents();
+
+        $doc = new DOMDocument();
+        $doc->loadHTML($content);
+
+        return new SingleNode($doc);
     }
 }
