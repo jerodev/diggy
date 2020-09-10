@@ -54,7 +54,7 @@ trait EnumeratesValues
         $doc = new DOMDocument();
 
         foreach ($nodes as $node) {
-            if ($callback($node) && ($newNode = $doc->importNode($node))) {
+            if ($callback($node) && ($newNode = $doc->importNode($node, true))) {
                 $doc->appendChild($newNode);
             }
         }

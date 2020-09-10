@@ -4,6 +4,7 @@ namespace Jerodev\Diggy\Tests\NodeFilter;
 
 use DOMDocument;
 use DOMNodeList;
+use Generator;
 use Jerodev\Diggy\NodeFilter\NodeCollection;
 use PHPUnit\Framework\TestCase;
 
@@ -23,6 +24,21 @@ final class NodeFilterChainTest extends TestCase
         $this->assertEquals('three', $text);
     }
 
+    /**
+     * @test
+     * @dataProvider functionProvider
+     */
+    public function it_should_chain_functions(?string $expectedText, array $functions): void
+    {
+        $node = new NodeCollection($this->createDOMNodes());
+
+        foreach ($functions as $function) {
+            $node = $node->{$function[0]}(...$function[1]);
+        }
+
+        $this->assertEquals($expectedText, $node->text());
+    }
+
     /** @test */
     public function it_should_not_break_on_empty_chain_value(): void
     {
@@ -35,6 +51,27 @@ final class NodeFilterChainTest extends TestCase
             ->text();
 
         $this->assertNull($text);
+    }
+
+    public function functionProvider(): Generator
+    {
+        yield [
+            'three',
+            [
+                ['querySelector', ['li']],
+                ['whereHasAttribute', ['class', 'third']],
+            ],
+        ];
+
+        yield [
+            'Info',
+            [
+                ['querySelector', ['div']],
+                ['whereHas', [static fn (NodeCollection $n) => $n->querySelector('small')]],
+                ['querySelector', ['small.info']],
+                ['whereHasAttribute', ['class', 'info']],
+            ],
+        ];
     }
 
     private function createDOMNodes(): DOMNodeList
@@ -55,6 +92,13 @@ final class NodeFilterChainTest extends TestCase
                         <li>four</li>
                     </ul>
                 </div>
+                <div/>
+                <form method="post">
+                    Email: <input type="email" required />
+                    Password: <input type="password" required />
+                    telephone: <input type="text" />
+                    Website: <input type="url" />
+                </form>
             </body>
         </html>
         HTML;
