@@ -74,6 +74,21 @@ final class NodeCollection implements NodeFilter
         return $this->each(static fn (NodeCollection $n) => $n->text());
     }
 
+    public function whereHas(Closure $closure): NodeFilter
+    {
+        $newDoc = new DOMDocument();
+
+        foreach ($this->nodes as $node) {
+            $filter = $closure(new NodeCollection($node));
+
+            if ($filter->exists() && ($newNode = $newDoc->importNode($node, true))) {
+                $newDoc->appendChild($newNode);
+            }
+        }
+
+        return new NodeCollection($newDoc->childNodes);
+    }
+
     public function xPath(string $expression): NodeFilter
     {
         return $this->internalXpath($this->nodes, $expression);

@@ -5,6 +5,7 @@ namespace Jerodev\Diggy\Tests\NodeFilter;
 use DOMDocument;
 use DOMNodeList;
 use Jerodev\Diggy\NodeFilter\NodeCollection;
+use Jerodev\Diggy\NodeFilter\NodeFilter;
 use PHPUnit\Framework\TestCase;
 
 final class NodeCollectionTest extends TestCase
@@ -24,6 +25,17 @@ final class NodeCollectionTest extends TestCase
         $this->assertTrue($this->node->exists());
         $this->assertTrue($this->node->exists('li.third'));
         $this->assertFalse($this->node->exists('li.forth'));
+    }
+
+    /** @test */
+    public function it_should_filter_children_on_where_has(): void
+    {
+        $nodes = $this->node
+            ->querySelector('div')
+            ->whereHas(static fn (NodeFilter $f) => $f->querySelector('ul'));
+
+        $this->assertEquals(1, $nodes->count());
+        $this->assertStringStartsWith('one', \trim($nodes->text()));
     }
 
     /** @test */

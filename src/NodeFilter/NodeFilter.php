@@ -55,6 +55,15 @@ interface NodeFilter
     public function texts(): array;
 
     /**
+     * Filter the current nodes by their child nodes.
+     * The closure gets a NodeFilter instance that can be used to define how the nodes should be filtered.
+     *
+     * @param Closure $closure
+     * @return NodeFilter
+     */
+    public function whereHas(Closure $closure): NodeFilter;
+
+    /**
      * Find one or more nodes using an xpath expression.
      *
      * @param string $selector

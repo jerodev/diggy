@@ -3,6 +3,7 @@
 namespace Jerodev\Diggy\Tests\NodeFilter;
 
 use Jerodev\Diggy\NodeFilter\NodeCollection;
+use Jerodev\Diggy\NodeFilter\NodeFilter;
 use Jerodev\Diggy\NodeFilter\NullNode;
 use PHPUnit\Framework\TestCase;
 
@@ -45,6 +46,15 @@ final class NullNodeTest extends TestCase
         $this->assertInstanceOf(
             NullNode::class,
             $this->node->querySelector('.foo')
+        );
+    }
+
+    /** @test */
+    public function it_should_return_null_node_on_where_has(): void
+    {
+        $this->assertInstanceOf(
+            NullNode::class,
+            $this->node->whereHas(static fn (NodeFilter $f) => $f->querySelector('.foo'))
         );
     }
 

@@ -2,6 +2,8 @@
 
 namespace Jerodev\Diggy\NodeFilter;
 
+use Closure;
+
 /**
  * This class is returned from the fluent api when no nodes are left.
  * By doing this, the chain is not broken and the last function can return a default value.
@@ -16,7 +18,7 @@ final class NullNode implements NodeFilter
     /**
      * @inheritDoc
      */
-    public function each($selector = null, ?\Closure $closure = null): array
+    public function each($selector = null, ?Closure $closure = null): array
     {
         return [];
     }
@@ -28,7 +30,7 @@ final class NullNode implements NodeFilter
 
     public function querySelector(string $selector): NodeFilter
     {
-        return new self();
+        return $this;
     }
 
     public function text(): ?string
@@ -41,8 +43,13 @@ final class NullNode implements NodeFilter
         return [];
     }
 
+    public function whereHas(Closure $closure): NodeFilter
+    {
+        return $this;
+    }
+
     public function xPath(string $selector): NodeFilter
     {
-        return new self();
+        return $this;
     }
 }
