@@ -53,7 +53,7 @@ final class NullNode implements NodeFilter
         return $this;
     }
 
-    public function text(): ?string
+    public function text(?string $selector = null): ?string
     {
         return null;
     }

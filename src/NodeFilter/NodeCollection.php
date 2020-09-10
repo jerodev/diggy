@@ -93,8 +93,12 @@ final class NodeCollection implements NodeFilter
         return $this->internalQuerySelector($this->nodes, $selector);
     }
 
-    public function text(): ?string
+    public function text(?string $selector = null): ?string
     {
+        if ($selector) {
+            return $this->querySelector($selector)->text();
+        }
+
         $content = $this->nodes->item(0)->textContent;
         if (empty($content)) {
             return null;
