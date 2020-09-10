@@ -39,6 +39,56 @@ final class NodeCollectionTest extends TestCase
     }
 
     /** @test */
+    public function it_should_filter_has_attribute(): void
+    {
+        $nodes = $this->node
+            ->querySelector('input')
+            ->hasAttribute('required');
+
+        $this->assertEquals(2, $nodes->count());
+    }
+
+    /** @test */
+    public function it_should_filter_has_attribute_with_value(): void
+    {
+        $nodes = $this->node
+            ->querySelector('input')
+            ->hasAttribute('type', 'email');
+
+        $this->assertEquals(1, $nodes->count());
+    }
+
+    /** @test */
+    public function it_should_filter_has_text(): void
+    {
+        $nodes = $this->node
+            ->querySelector('div')
+            ->hasText();
+
+        $this->assertEquals(2, $nodes->count());
+    }
+
+    /** @test */
+    public function it_should_filter_has_text_value(): void
+    {
+        $nodes = $this->node
+            ->querySelector('li')
+            ->hasText('e');
+
+        $this->assertEquals(2, $nodes->count());
+    }
+
+    /** @test */
+    public function it_should_filter_has_text_value_exact(): void
+    {
+        $nodes = $this->node
+            ->querySelector('li')
+            ->hasText('one', true, true);
+
+        $this->assertEquals(1, $nodes->count());
+    }
+
+    /** @test */
     public function it_should_get_text_from_element(): void
     {
         $this->assertEquals(
@@ -92,6 +142,13 @@ final class NodeCollectionTest extends TestCase
                         <li>four</li>
                     </ul>
                 </div>
+                <div/>
+                <form method="post">
+                    Email: <input type="email" required />
+                    Password: <input type="password" required />
+                    telephone: <input type="text" />
+                    Website: <input type="url" />
+                </form>
             </body>
         </html>
         HTML;

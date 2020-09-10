@@ -43,6 +43,30 @@ trait EnumeratesValues
     }
 
     /**
+     * filter nodes directly on DOMNode level
+     *
+     * @param DOMNodeList $nodes
+     * @param Closure $callback
+     * @return NodeFilter
+     */
+    protected function internalFilter(DOMNodeList $nodes, Closure $callback): NodeFilter
+    {
+        $doc = new DOMDocument();
+
+        foreach ($nodes as $node) {
+            if ($callback($node) && ($newNode = $doc->importNode($node))) {
+                $doc->appendChild($newNode);
+            }
+        }
+
+        if ($doc->childNodes->count() === 0) {
+            return new NullNode();
+        }
+
+        return new NodeCollection($doc->childNodes);
+    }
+
+    /**
      * @param DOMNode|DOMNodeList $nodes
      * @param string $selector
      * @return NodeFilter

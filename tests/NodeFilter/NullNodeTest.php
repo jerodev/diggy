@@ -41,6 +41,24 @@ final class NullNodeTest extends TestCase
     }
 
     /** @test */
+    public function it_should_return_null_node_on_has_attribute(): void
+    {
+        $this->assertInstanceOf(
+            NullNode::class,
+            $this->node->hasAttribute('class')
+        );
+    }
+
+    /** @test */
+    public function it_should_return_null_node_on_has_text(): void
+    {
+        $this->assertInstanceOf(
+            NullNode::class,
+            $this->node->hasText('bar')
+        );
+    }
+
+    /** @test */
     public function it_should_return_null_node_on_query_selector(): void
     {
         $this->assertInstanceOf(
