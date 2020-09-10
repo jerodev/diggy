@@ -33,16 +33,6 @@ final class NullNode implements NodeFilter
         return null;
     }
 
-    public function hasAttribute(string $key, ?string $value = null): NodeFilter
-    {
-        return $this;
-    }
-
-    public function hasText(?string $value = null, bool $trim = true, bool $exact = false): NodeFilter
-    {
-        return $this;
-    }
-
     public function querySelector(string $selector): NodeFilter
     {
         return $this;
@@ -59,6 +49,16 @@ final class NullNode implements NodeFilter
     }
 
     public function whereHas(Closure $closure): NodeFilter
+    {
+        return $this;
+    }
+
+    public function whereHasAttribute(string $key, ?string $value = null): NodeFilter
+    {
+        return $this;
+    }
+
+    public function whereHasText(?string $value = null, bool $trim = true, bool $exact = false): NodeFilter
     {
         return $this;
     }

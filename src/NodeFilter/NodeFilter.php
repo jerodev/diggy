@@ -40,26 +40,6 @@ interface NodeFilter
     public function getAttribute(string $name): ?string;
 
     /**
-     * Filter the nodes by nodes that have a certain attribute.
-     * Optionally, a required value can be set for this attribute.
-     *
-     * @param string $key
-     * @param string|null $value
-     * @return NodeFilter
-     */
-    public function hasAttribute(string $key, ?string $value = null): NodeFilter;
-
-    /**
-     * Filters the nodes with nodes that contain the given text.
-     *
-     * @param string|null $value The value to match against.
-     * @param bool $trim Trim whitespaces and newlines from the node text.
-     * @param bool $exact If false, the content should contain the give text.
-     * @return NodeFilter
-     */
-    public function hasText(?string $value = null, bool $trim = true, bool $exact = false): NodeFilter;
-
-    /**
      * Find one or more nodes using a css selector string.
      *
      * @param string $selector
@@ -90,6 +70,26 @@ interface NodeFilter
      * @return NodeFilter
      */
     public function whereHas(Closure $closure): NodeFilter;
+
+    /**
+     * Filter the nodes by nodes that have a certain attribute.
+     * Optionally, a required value can be set for this attribute.
+     *
+     * @param string $key
+     * @param string|null $value
+     * @return NodeFilter
+     */
+    public function whereHasAttribute(string $key, ?string $value = null): NodeFilter;
+
+    /**
+     * Filters the nodes with nodes that contain the given text.
+     *
+     * @param string|null $value The value to match against.
+     * @param bool $trim Trim whitespaces and newlines from the node text.
+     * @param bool $exact If false, the content should contain the give text.
+     * @return NodeFilter
+     */
+    public function whereHasText(?string $value = null, bool $trim = true, bool $exact = false): NodeFilter;
 
     /**
      * Find one or more nodes using an xpath expression.

@@ -69,42 +69,6 @@ final class NodeCollection implements NodeFilter
         return $attribute->nodeValue;
     }
 
-    public function hasAttribute(string $key, ?string $value = null): NodeFilter
-    {
-        return $this->internalFilter($this->nodes, static function (DOMNode $node) use ($value, $key) {
-            if (! $node->hasAttributes()) {
-                return false;
-            }
-
-            $attribute = $node->attributes->getNamedItem($key);
-            if (\is_null($attribute)) {
-                return false;
-            }
-
-            return $value === null || $attribute->nodeValue === $value;
-        });
-    }
-
-    public function hasText(?string $value = null, bool $trim = true, bool $exact = false): NodeFilter
-    {
-        return $this->internalFilter($this->nodes, static function (DOMNode $node) use ($exact, $trim, $value) {
-            $text = $node->textContent;
-            if ($text && $trim) {
-                $text = \trim($text);
-            }
-
-            if ($value === null) {
-                return ! empty($text);
-            }
-
-            if ($exact) {
-                return $text === $value;
-            }
-
-            return \strpos($text, $value) !== false;
-        });
-    }
-
     public function querySelector(string $selector): NodeFilter
     {
         return $this->internalQuerySelector($this->nodes, $selector);
@@ -138,6 +102,42 @@ final class NodeCollection implements NodeFilter
         }
 
         return new NodeCollection($newDoc->childNodes);
+    }
+
+    public function whereHasAttribute(string $key, ?string $value = null): NodeFilter
+    {
+        return $this->internalFilter($this->nodes, static function (DOMNode $node) use ($value, $key) {
+            if (! $node->hasAttributes()) {
+                return false;
+            }
+
+            $attribute = $node->attributes->getNamedItem($key);
+            if (\is_null($attribute)) {
+                return false;
+            }
+
+            return $value === null || $attribute->nodeValue === $value;
+        });
+    }
+
+    public function whereHasText(?string $value = null, bool $trim = true, bool $exact = false): NodeFilter
+    {
+        return $this->internalFilter($this->nodes, static function (DOMNode $node) use ($exact, $trim, $value) {
+            $text = $node->textContent;
+            if ($text && $trim) {
+                $text = \trim($text);
+            }
+
+            if ($value === null) {
+                return ! empty($text);
+            }
+
+            if ($exact) {
+                return $text === $value;
+            }
+
+            return \strpos($text, $value) !== false;
+        });
     }
 
     public function xPath(string $expression): NodeFilter

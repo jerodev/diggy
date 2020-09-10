@@ -45,7 +45,7 @@ final class NullNodeTest extends TestCase
     {
         $this->assertInstanceOf(
             NullNode::class,
-            $this->node->hasAttribute('class')
+            $this->node->whereHasAttribute('class')
         );
     }
 
@@ -54,7 +54,7 @@ final class NullNodeTest extends TestCase
     {
         $this->assertInstanceOf(
             NullNode::class,
-            $this->node->hasText('bar')
+            $this->node->whereHasText('bar')
         );
     }
 

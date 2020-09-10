@@ -32,7 +32,7 @@ final class NodeCollectionTest extends TestCase
     {
         $nodes = $this->node
             ->querySelector('input')
-            ->hasAttribute('required');
+            ->whereHasAttribute('required');
 
         $this->assertEquals(2, $nodes->count());
     }
@@ -42,7 +42,7 @@ final class NodeCollectionTest extends TestCase
     {
         $nodes = $this->node
             ->querySelector('input')
-            ->hasAttribute('type', 'email');
+            ->whereHasAttribute('type', 'email');
 
         $this->assertEquals(1, $nodes->count());
     }
@@ -52,7 +52,7 @@ final class NodeCollectionTest extends TestCase
     {
         $nodes = $this->node
             ->querySelector('div')
-            ->hasText();
+            ->whereHasText();
 
         $this->assertEquals(2, $nodes->count());
     }
@@ -62,7 +62,7 @@ final class NodeCollectionTest extends TestCase
     {
         $nodes = $this->node
             ->querySelector('li')
-            ->hasText('e');
+            ->whereHasText('e');
 
         $this->assertEquals(2, $nodes->count());
     }
@@ -72,7 +72,7 @@ final class NodeCollectionTest extends TestCase
     {
         $nodes = $this->node
             ->querySelector('li')
-            ->hasText('one', true, true);
+            ->whereHasText('one', true, true);
 
         $this->assertEquals(1, $nodes->count());
     }
