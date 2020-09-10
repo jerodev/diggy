@@ -54,6 +54,11 @@ final class NodeCollection implements NodeFilter
         return $this->querySelector($selector)->exists();
     }
 
+    public function first(): NodeFilter
+    {
+        return new self($this->nodes->item(0));
+    }
+
     public function getAttribute(string $name): ?string
     {
         $node = $this->nodes->item(0);
@@ -67,6 +72,20 @@ final class NodeCollection implements NodeFilter
         }
 
         return $attribute->nodeValue;
+    }
+
+    public function last(): NodeFilter
+    {
+        return new self($this->nodes->item($this->count() - 1));
+    }
+
+    public function nth(int $index): NodeFilter
+    {
+        if ($index > $this->count() - 1) {
+            return new NullNode();
+        }
+
+        return new self($this->nodes->item($index));
     }
 
     public function querySelector(string $selector): NodeFilter

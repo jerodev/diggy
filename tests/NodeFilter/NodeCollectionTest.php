@@ -98,6 +98,33 @@ final class NodeCollectionTest extends TestCase
     }
 
     /** @test */
+    public function it_should_get_first_element(): void
+    {
+        $this->assertEquals(
+            'one',
+            $this->node->querySelector('li')->first()->text()
+        );
+    }
+
+    /** @test */
+    public function it_should_get_last_element(): void
+    {
+        $this->assertEquals(
+            'four',
+            $this->node->querySelector('li')->last()->text()
+        );
+    }
+
+    /** @test */
+    public function it_should_get_nth_element(): void
+    {
+        $this->assertEquals(
+            'two',
+            $this->node->querySelector('li')->nth(1)->text()
+        );
+    }
+
+    /** @test */
     public function it_should_get_text_from_element(): void
     {
         $this->assertEquals(

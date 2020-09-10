@@ -33,10 +33,10 @@ final class NodeFilterChainTest extends TestCase
         $node = new NodeCollection($this->createDOMNodes());
 
         foreach ($functions as $function) {
-            $node = $node->{$function[0]}(...$function[1]);
+            $node = $node->{$function[0]}(...$function[1] ?? []);
         }
 
-        $this->assertEquals($expectedText, $node->text());
+        $this->assertEquals($expectedText, $node);
     }
 
     /** @test */
@@ -60,6 +60,7 @@ final class NodeFilterChainTest extends TestCase
             [
                 ['querySelector', ['li']],
                 ['whereHasAttribute', ['class', 'third']],
+                ['text'],
             ],
         ];
 
@@ -70,7 +71,19 @@ final class NodeFilterChainTest extends TestCase
                 ['whereHas', [static fn (NodeCollection $n) => $n->querySelector('small')]],
                 ['querySelector', ['small.info']],
                 ['whereHasAttribute', ['class', 'info']],
+                ['text'],
             ],
+        ];
+
+        yield [
+            'password',
+            [
+                ['querySelector', ['form[method=post]']],
+                ['querySelector', ['input']],
+                ['whereHasAttribute', ['type']],
+                ['nth', [1]],
+                ['getAttribute', ['type']],
+            ]
         ];
     }
 

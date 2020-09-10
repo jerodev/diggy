@@ -28,9 +28,24 @@ final class NullNode implements NodeFilter
         return false;
     }
 
+    public function first(): NodeFilter
+    {
+        return $this;
+    }
+
     public function getAttribute(string $name): ?string
     {
         return null;
+    }
+
+    public function last(): NodeFilter
+    {
+        return $this;
+    }
+
+    public function nth(int $index): NodeFilter
+    {
+        return $this;
     }
 
     public function querySelector(string $selector): NodeFilter
