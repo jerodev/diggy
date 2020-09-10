@@ -23,7 +23,7 @@ trait EnumeratesValues
      */
     protected function internalEach(DOMNodeList $nodes, $selector = null, ?Closure $closure = null, ?int $max = null): array
     {
-        if ($max <= 0) {
+        if ($max !== null && $max <= 0) {
             return [];
         }
 

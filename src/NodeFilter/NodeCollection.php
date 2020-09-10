@@ -42,7 +42,7 @@ final class NodeCollection implements NodeFilter
 
     public function each($selector = null, ?Closure $closure = null, ?int $max = null): array
     {
-        return $this->internalEach($this->nodes, $selector, $closure);
+        return $this->internalEach($this->nodes, $selector, $closure, $max);
     }
 
     public function exists(?string $selector = null): bool
