@@ -18,10 +18,15 @@ trait EnumeratesValues
      * @param DOMNodeList $nodes
      * @param Closure|string|null $selector
      * @param Closure|null $closure
+     * @param int|null $max
      * @return array
      */
-    protected function internalEach(DOMNodeList $nodes, $selector = null, ?Closure $closure = null): array
+    protected function internalEach(DOMNodeList $nodes, $selector = null, ?Closure $closure = null, ?int $max = null): array
     {
+        if ($max <= 0) {
+            return [];
+        }
+
         if (\is_string($selector)) {
             $nodes = $this->internalQuerySelector($nodes, $selector);
         } else if ($selector instanceof Closure) {
@@ -36,6 +41,10 @@ trait EnumeratesValues
                 $values[] = $closure(new NodeCollection($node));
             } else {
                 $values[] = new NodeCollection($node);
+            }
+
+            if ($max !== null && --$max <= 0) {
+                break;
             }
         }
 

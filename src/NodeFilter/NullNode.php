@@ -18,7 +18,7 @@ final class NullNode implements NodeFilter
     /**
      * @inheritDoc
      */
-    public function each($selector = null, ?Closure $closure = null): array
+    public function each($selector = null, ?Closure $closure = null, ?int $max = null): array
     {
         return [];
     }

@@ -19,9 +19,10 @@ interface NodeFilter
      *
      * @param Closure|string|null $selector
      * @param Closure|null $closure
+     * @param int|null $max Optional, The maximum number of nodes to loop over.
      * @return array
      */
-    public function each($selector = null, ?Closure $closure = null): array;
+    public function each($selector = null, ?Closure $closure = null, ?int $max = null): array;
 
     /**
      * Indicates whether a certain node exists.
