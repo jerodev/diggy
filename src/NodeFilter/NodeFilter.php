@@ -32,6 +32,14 @@ interface NodeFilter
     public function exists(?string $selector = null): bool;
 
     /**
+     * Get the value for the requested attribute of the first node in the current collection.
+     *
+     * @param string $name
+     * @return string|null
+     */
+    public function getAttribute(string $name): ?string;
+
+    /**
      * Filter the nodes by nodes that have a certain attribute.
      * Optionally, a required value can be set for this attribute.
      *

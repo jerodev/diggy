@@ -28,6 +28,11 @@ final class NullNode implements NodeFilter
         return false;
     }
 
+    public function getAttribute(string $name): ?string
+    {
+        return null;
+    }
+
     public function hasAttribute(string $key, ?string $value = null): NodeFilter
     {
         return $this;

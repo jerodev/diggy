@@ -28,17 +28,6 @@ final class NodeCollectionTest extends TestCase
     }
 
     /** @test */
-    public function it_should_filter_children_on_where_has(): void
-    {
-        $nodes = $this->node
-            ->querySelector('div')
-            ->whereHas(static fn (NodeFilter $f) => $f->querySelector('ul'));
-
-        $this->assertEquals(1, $nodes->count());
-        $this->assertStringStartsWith('one', \trim($nodes->text()));
-    }
-
-    /** @test */
     public function it_should_filter_has_attribute(): void
     {
         $nodes = $this->node
@@ -86,6 +75,26 @@ final class NodeCollectionTest extends TestCase
             ->hasText('one', true, true);
 
         $this->assertEquals(1, $nodes->count());
+    }
+
+    /** @test */
+    public function it_should_filter_children_on_where_has(): void
+    {
+        $nodes = $this->node
+            ->querySelector('div')
+            ->whereHas(static fn (NodeFilter $f) => $f->querySelector('ul'));
+
+        $this->assertEquals(1, $nodes->count());
+        $this->assertStringStartsWith('one', \trim($nodes->text()));
+    }
+
+    /** @test */
+    public function it_should_get_attribute_value(): void
+    {
+        $nodes = $this->node->querySelector('input[type=email]');
+
+        $this->assertEquals('email', $nodes->getAttribute('type'));
+        $this->assertNull($nodes->getAttribute('id'));
     }
 
     /** @test */

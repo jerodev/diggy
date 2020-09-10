@@ -54,6 +54,21 @@ final class NodeCollection implements NodeFilter
         return $this->querySelector($selector)->exists();
     }
 
+    public function getAttribute(string $name): ?string
+    {
+        $node = $this->nodes->item(0);
+        if (! $node->hasAttributes()) {
+            return null;
+        }
+
+        $attribute = $node->attributes->getNamedItem($name);
+        if (\is_null($attribute)) {
+            return null;
+        }
+
+        return $attribute->nodeValue;
+    }
+
     public function hasAttribute(string $key, ?string $value = null): NodeFilter
     {
         return $this->internalFilter($this->nodes, static function (DOMNode $node) use ($value, $key) {

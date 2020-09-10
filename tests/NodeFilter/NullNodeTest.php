@@ -86,6 +86,14 @@ final class NullNodeTest extends TestCase
     }
 
     /** @test */
+    public function it_should_return_null_on_get_attribute(): void
+    {
+        $this->assertNull(
+            $this->node->getAttribute('class')
+        );
+    }
+
+    /** @test */
     public function it_should_return_null_on_text(): void
     {
         $this->assertNull(
