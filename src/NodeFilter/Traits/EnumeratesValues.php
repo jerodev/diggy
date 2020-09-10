@@ -76,11 +76,11 @@ trait EnumeratesValues
     }
 
     /**
-     * @param DOMNode|DOMNodeList $nodes
+     * @param DOMNodeList $nodes
      * @param string $selector
      * @return NodeFilter
      */
-    protected function internalQuerySelector($nodes, string $selector): NodeFilter
+    protected function internalQuerySelector(DOMNodeList $nodes, string $selector): NodeFilter
     {
         return $this->internalXpath(
             $nodes,
@@ -93,7 +93,7 @@ trait EnumeratesValues
      * @param string $expression
      * @return NodeFilter
      */
-    protected function internalXpath($nodes, string $expression): NodeFilter
+    protected function internalXpath(DOMNodeList $nodes, string $expression): NodeFilter
     {
         $newDoc = new DOMDocument();
 
