@@ -27,7 +27,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Jerodev\\Diggy\\Tests": "tests/"
+            "Jerodev\\Diggy\\Tests\\": "tests/"
         }
     }
 }
