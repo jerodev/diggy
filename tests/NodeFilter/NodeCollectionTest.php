@@ -7,7 +7,7 @@ use DOMNodeList;
 use Jerodev\Diggy\NodeFilter\NodeCollection;
 use PHPUnit\Framework\TestCase;
 
-class NodeCollectionTest extends TestCase
+final class NodeCollectionTest extends TestCase
 {
     private NodeCollection $node;
 

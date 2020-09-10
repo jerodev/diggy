@@ -35,11 +35,11 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist --no-suggest
 
-#      - name: Run CodeSniffer
-#        run: ./vendor/bin/phpcs -p
+      - name: Run CodeSniffer
+        run: ./vendor/bin/phpcs -p
 
       - name: Run PHPStan
-        run: ./vendor/bin/phpstan analyse
+        run: ./vendor/bin/phpstan analyse --no-progress
 
       - name: Run PHPUnit
         run: ./vendor/bin/phpunit

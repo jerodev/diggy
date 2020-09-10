@@ -6,7 +6,7 @@ use Jerodev\Diggy\NodeFilter\NodeCollection;
 use Jerodev\Diggy\NodeFilter\NullNode;
 use PHPUnit\Framework\TestCase;
 
-class NullNodeTest extends TestCase
+final class NullNodeTest extends TestCase
 {
     private NullNode $node;
 
