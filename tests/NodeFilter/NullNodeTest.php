@@ -25,6 +25,15 @@ class NullNodeTest extends TestCase
     }
 
     /** @test */
+    public function it_should_return_empty_array_on_texts(): void
+    {
+        $this->assertEquals(
+            [],
+            $this->node->texts()
+        );
+    }
+
+    /** @test */
     public function it_should_return_null_node_on_query_selector(): void
     {
         $this->assertInstanceOf(
@@ -39,6 +48,14 @@ class NullNodeTest extends TestCase
         $this->assertInstanceOf(
             NullNode::class,
             $this->node->xPath('.foo')
+        );
+    }
+
+    /** @test */
+    public function it_should_return_null_on_text(): void
+    {
+        $this->assertNull(
+            $this->node->text()
         );
     }
 }

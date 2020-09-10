@@ -8,6 +8,11 @@ namespace Jerodev\Diggy\NodeFilter;
  */
 final class NullNode implements NodeFilter
 {
+    public function count(): int
+    {
+        return 0;
+    }
+
     /**
      * @inheritDoc
      */
@@ -19,6 +24,16 @@ final class NullNode implements NodeFilter
     public function querySelector(string $selector): NodeFilter
     {
         return new self();
+    }
+
+    public function text(): ?string
+    {
+        return null;
+    }
+
+    public function texts(): array
+    {
+        return [];
     }
 
     public function xPath(string $selector): NodeFilter

@@ -19,11 +19,39 @@ class NodeCollectionTest extends TestCase
     }
 
     /** @test */
+    public function it_should_get_text_from_element(): void
+    {
+        $this->assertEquals(
+            'one',
+            $this->node->querySelector('li')->text()
+        );
+
+        $this->assertEquals(
+            'three',
+            $this->node->querySelector('li.third')->text()
+        );
+    }
+
+    /** @test */
+    public function it_should_get_text_from_elements(): void
+    {
+        $this->assertEquals(
+            ['one', 'two', 'three', 'four'],
+            $this->node->querySelector('li')->texts()
+        );
+
+        $this->assertEquals(
+            ['three'],
+            $this->node->querySelector('li.third')->texts()
+        );
+    }
+
+    /** @test */
     public function it_should_select_using_query_selector(): void
     {
         $nodes = $this->node->querySelector('li');
 
-        $this->assertCount(4, $nodes->each());
+        $this->assertEquals(4, $nodes->count());
     }
 
     private function createDOMNodes(): DOMNodeList
