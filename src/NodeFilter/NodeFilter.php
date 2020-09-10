@@ -75,7 +75,7 @@ interface NodeFilter
      * Returns the text content of the first node in the current collection.
      * Empty strings are converted to `null`.
      *
-     * @param string|null Optional selector for the node to get text from.
+     * @param string|null $selector Optional selector for the node to get text from.
      * @return string|null
      */
     public function text(?string $selector = null): ?string;
