@@ -45,6 +45,15 @@ final class NodeCollection implements NodeFilter
         return $this->internalEach($this->nodes, $selector, $closure);
     }
 
+    public function exists(?string $selector = null): bool
+    {
+        if (\is_null($selector)) {
+            return true;
+        }
+
+        return $this->querySelector($selector)->exists();
+    }
+
     public function querySelector(string $selector): NodeFilter
     {
         return $this->internalQuerySelector($this->nodes, $selector);
@@ -52,7 +61,12 @@ final class NodeCollection implements NodeFilter
 
     public function text(): ?string
     {
-        return $this->nodes->item(0)->textContent;
+        $content = $this->nodes->item(0)->textContent;
+        if (empty($content)) {
+            return null;
+        }
+
+        return $content;
     }
 
     public function texts(): array

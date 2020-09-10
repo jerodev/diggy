@@ -19,6 +19,14 @@ final class NodeCollectionTest extends TestCase
     }
 
     /** @test */
+    public function it_should_check_if_node_exists(): void
+    {
+        $this->assertTrue($this->node->exists());
+        $this->assertTrue($this->node->exists('li.third'));
+        $this->assertFalse($this->node->exists('li.forth'));
+    }
+
+    /** @test */
     public function it_should_get_text_from_element(): void
     {
         $this->assertEquals(

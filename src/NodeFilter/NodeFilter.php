@@ -24,6 +24,14 @@ interface NodeFilter
     public function each($selector = null, ?Closure $closure = null): array;
 
     /**
+     * Indicates whether a certain node exists.
+     *
+     * @param string|null $selector
+     * @return bool
+     */
+    public function exists(?string $selector = null): bool;
+
+    /**
      * Find one or more nodes using a css selector string.
      *
      * @param string $selector
@@ -33,6 +41,7 @@ interface NodeFilter
 
     /**
      * Returns the text content of the first node in the current collection.
+     * Empty strings are converted to `null`.
      *
      * @return string|null
      */
