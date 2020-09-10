@@ -18,28 +18,28 @@ jobs:
     name: PHP ${{ matrix.php }}
 
     steps:
-      -   name: Code checkout
-          uses: actions/checkout@v2
+      - name: Code checkout
+        uses: actions/checkout@v2
 
-      -   name: Cache dependencies
-          uses: actions/cache@v2
-          with:
-            path: ~/.composer/cache/files
-            key: data-mapper-php${{ matrix.php }}
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.composer/cache/files
+          key: data-mapper-php${{ matrix.php }}
 
-      -   name: Setup PHP
-          uses: shivammathur/setup-php@v2
-          with:
-            php-version: ${{ matrix.php }}
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
 
-      -   name: Install dependencies
-          run: composer install --no-interaction --prefer-dist --no-suggest
-#
-#      -   name: Run CodeSniffer
-#          run: ./vendor/bin/phpcs -p
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist --no-suggest
 
-      -   name: Run PHPStan
-          run: ./vendor/bin/phpstan analyse
-#
-#      -   name: Run PHPUnit
-#          run: ./vendor/bin/phpunit
+#      - name: Run CodeSniffer
+#        run: ./vendor/bin/phpcs -p
+
+      - name: Run PHPStan
+        run: ./vendor/bin/phpstan analyse
+
+      - name: Run PHPUnit
+        run: ./vendor/bin/phpunit

@@ -10,33 +10,32 @@ use DOMXPath;
 use Jerodev\Diggy\NodeFilter\NodeCollection;
 use Jerodev\Diggy\NodeFilter\NodeFilter;
 use Jerodev\Diggy\NodeFilter\NullNode;
-use Jerodev\Diggy\NodeFilter\SingleNode;
 use Symfony\Component\CssSelector\CssSelectorConverter;
 
 trait EnumeratesValues
 {
     /**
-     * @param DOMNodeList $documents
-     * @param Closure|string $selector
+     * @param DOMNodeList $nodes
+     * @param Closure|string|null $selector
      * @param Closure|null $closure
      * @return array
      */
-    protected function internalEach(DOMNodeList $documents, $selector, ?Closure $closure = null): array
+    protected function internalEach(DOMNodeList $nodes, $selector = null, ?Closure $closure = null): array
     {
         if (\is_string($selector)) {
-            $documents = $this->internalQuerySelector($documents, $selector);
+            $nodes = $this->internalQuerySelector($nodes, $selector);
         } else if ($selector instanceof Closure) {
             $closure = $selector;
         }
 
         $values = [];
-        foreach ($documents as $document) {
-            \assert($document instanceof DOMNode);
+        foreach ($nodes as $node) {
+            \assert($node instanceof DOMNode);
 
             if ($closure instanceof Closure) {
-                $values[] = $closure(SingleNode::fromDomNode($document));
+                $values[] = $closure(new NodeCollection($node));
             } else {
-                $values[] = SingleNode::fromDomNode($document);
+                $values[] = new NodeCollection($node);
             }
         }
 
@@ -44,7 +43,7 @@ trait EnumeratesValues
     }
 
     /**
-     * @param DOMDocument|DOMNodeList $nodes
+     * @param DOMNode|DOMNodeList $nodes
      * @param string $selector
      * @return NodeFilter
      */
@@ -57,39 +56,31 @@ trait EnumeratesValues
     }
 
     /**
-     * @param DOMDocument|DOMNodeList $nodes
+     * @param DOMNodeList $nodes
      * @param string $expression
      * @return NodeFilter
      */
     protected function internalXpath($nodes, string $expression): NodeFilter
     {
-        $documentArray = [];
-        if ($nodes instanceof DOMDocument) {
-            $documentArray = [
-                $nodes
-            ];
-        } else if ($nodes instanceof DOMNodeList) {
-            foreach ($nodes as $node) {
-                $doc = new DOMDocument();
-                $doc->importNode($node, true);
-                $documentArray[] = $doc;
-            }
-        }
-
         $newDoc = new DOMDocument();
-        foreach ($documentArray as $document) {
-            $xpath = new DOMXPath($document);
-            $nodeList = $xpath->query($expression);
 
-            foreach ($nodeList as $node) {
-                $newDoc->appendChild($node);
+        foreach ($nodes as $node) {
+            $xpath = new DOMXPath($node->ownerDocument);
+            $filteredNodes = $xpath->query($expression, $node);
+
+            if ($filteredNodes === false) {
+                continue;
+            }
+
+            foreach ($filteredNodes as $filteredNode) {
+                if ($newNode = $newDoc->importNode($filteredNode, true)) {
+                    $newDoc->appendChild($newNode);
+                }
             }
         }
 
         if ($newDoc->childNodes->length === 0) {
             return new NullNode();
-        } elseif ($newDoc->childNodes->length === 1) {
-            return SingleNode::fromDomNode($newDoc->firstChild);
         } else {
             return new NodeCollection($newDoc->childNodes);
         }

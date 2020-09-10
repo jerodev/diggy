@@ -12,6 +12,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^7.4",
+        "ext-dom": "*",
         "guzzlehttp/guzzle": "^7.0",
         "symfony/css-selector": "^5.1"
     },
@@ -22,6 +23,11 @@
     "autoload": {
         "psr-4": {
             "Jerodev\\Diggy\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Jerodev\\Diggy\\Tests": "tests/"
         }
     }
 }

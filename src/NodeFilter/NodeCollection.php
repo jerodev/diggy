@@ -4,10 +4,8 @@ namespace Jerodev\Diggy\NodeFilter;
 
 use Closure;
 use DOMDocument;
+use DOMNode;
 use DOMNodeList;
-use DOMXPath;
-use Generator;
-use Symfony\Component\CssSelector\CssSelectorConverter;
 
 final class NodeCollection implements NodeFilter
 {
@@ -15,12 +13,23 @@ final class NodeCollection implements NodeFilter
 
     private DOMNodeList $documents;
 
-    public function __construct(DOMNodeList $documents)
+    /**
+     * @param DOMNode|DOMNodeList $nodes
+     */
+    public function __construct($nodes)
     {
-        $this->documents = $documents;
+        if ($nodes instanceof DOMNode) {
+            $doc = new DOMDocument();
+            $doc->loadHTML('<html></html>');
+            $doc->importNode($nodes, true);
+
+            $nodes = $doc->childNodes;
+        }
+
+        $this->documents = $nodes;
     }
 
-    public function each($selector, ?Closure $closure = null): array
+    public function each($selector = null, ?Closure $closure = null): array
     {
         return $this->internalEach($this->documents, $selector, $closure);
     }

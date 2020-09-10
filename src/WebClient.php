@@ -5,7 +5,9 @@ namespace Jerodev\Diggy;
 use DOMDocument;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
-use Jerodev\Diggy\NodeFilter\SingleNode;
+use Jerodev\Diggy\NodeFilter\NodeCollection;
+use Jerodev\Diggy\NodeFilter\NodeFilter;
+use Jerodev\Diggy\NodeFilter\NullNode;
 
 final class WebClient
 {
@@ -23,24 +25,26 @@ final class WebClient
         $this->client = new Client($config);
     }
 
-    public function get(string $url): SingleNode
+    public function get(string $url): NodeFilter
     {
         return $this->request('GET', $url);
     }
 
-    public function post(string $url): SingleNode
+    public function post(string $url): NodeFilter
     {
         return $this->request('POST', $url);
     }
 
-    private function request(string $method, string $url): SingleNode
+    private function request(string $method, string $url): NodeFilter
     {
         $response = $this->client->request($method, $url);
         $content = $response->getBody()->getContents();
 
         $doc = new DOMDocument();
-        $doc->loadHTML($content);
+        if ($doc->loadHTML($content)) {
+            return new NodeCollection($doc->childNodes);
+        }
 
-        return new SingleNode($doc);
+        return new NullNode();
     }
 }
