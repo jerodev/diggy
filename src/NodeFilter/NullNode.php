@@ -33,7 +33,7 @@ final class NullNode implements NodeFilter
         return $this;
     }
 
-    public function getAttribute(string $name): ?string
+    public function attribute(string $name): ?string
     {
         return null;
     }

@@ -7,6 +7,14 @@ use Closure;
 interface NodeFilter
 {
     /**
+     * Get the value for the requested attribute of the first node in the current collection.
+     *
+     * @param string $name
+     * @return string|null
+     */
+    public function attribute(string $name): ?string;
+
+    /**
      * Returns the number of nodes in the current collection.
      *
      * @return int
@@ -38,14 +46,6 @@ interface NodeFilter
      * @return NodeFilter
      */
     public function first(): NodeFilter;
-
-    /**
-     * Get the value for the requested attribute of the first node in the current collection.
-     *
-     * @param string $name
-     * @return string|null
-     */
-    public function getAttribute(string $name): ?string;
 
     /**
      * Create a new collection of nodes only containing the last node of the current collection.

@@ -89,7 +89,7 @@ final class NullNodeTest extends TestCase
     public function it_should_return_null_on_get_attribute(): void
     {
         $this->assertNull(
-            $this->node->getAttribute('class')
+            $this->node->attribute('class')
         );
     }
 

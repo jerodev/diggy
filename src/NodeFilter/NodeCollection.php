@@ -59,7 +59,7 @@ final class NodeCollection implements NodeFilter
         return new self($this->nodes->item(0));
     }
 
-    public function getAttribute(string $name): ?string
+    public function attribute(string $name): ?string
     {
         $node = $this->nodes->item(0);
         if (! $node->hasAttributes()) {
