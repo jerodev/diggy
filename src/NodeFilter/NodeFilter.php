@@ -34,9 +34,10 @@ interface NodeFilter
     /**
      * Create a new collection of nodes only containing the first node of the current collection.
      *
+     * @param string|null $selector
      * @return NodeFilter
      */
-    public function first(): NodeFilter;
+    public function first(?string $selector = null): NodeFilter;
 
     /**
      * Get the value for the requested attribute of the first node in the current collection.
@@ -49,9 +50,10 @@ interface NodeFilter
     /**
      * Create a new collection of nodes only containing the last node of the current collection.
      *
+     * @param string|null $selector
      * @return NodeFilter
      */
-    public function last(): NodeFilter;
+    public function last(?string $selector = null): NodeFilter;
 
     /**
      * Create a new collection of nodes only containing the n'th node of the current collection.
@@ -59,9 +61,10 @@ interface NodeFilter
      * If the given index is out of bounds, a NullNode object will be returned.
      *
      * @param int $index
+     * @param string|null $selector
      * @return NodeFilter
      */
-    public function nth(int $index): NodeFilter;
+    public function nth(int $index, ?string $selector = null): NodeFilter;
 
     /**
      * Find one or more nodes using a css selector string.

@@ -54,9 +54,13 @@ final class NodeCollection implements NodeFilter
         return $this->querySelector($selector)->exists();
     }
 
-    public function first(): NodeFilter
+    public function first(?string $selector = null): NodeFilter
     {
-        return new self($this->nodes->item(0));
+        if (\is_null($selector)) {
+            return new self($this->nodes->item(0));
+        }
+
+        return $this->querySelector($selector)->first();
     }
 
     public function getAttribute(string $name): ?string
@@ -74,18 +78,26 @@ final class NodeCollection implements NodeFilter
         return $attribute->nodeValue;
     }
 
-    public function last(): NodeFilter
+    public function last(?string $selector = null): NodeFilter
     {
-        return new self($this->nodes->item($this->count() - 1));
-    }
-
-    public function nth(int $index): NodeFilter
-    {
-        if ($index > $this->count() - 1) {
-            return new NullNode();
+        if (\is_null($selector)) {
+            return new self($this->nodes->item($this->count() - 1));
         }
 
-        return new self($this->nodes->item($index));
+        return $this->querySelector($selector)->last();
+    }
+
+    public function nth(int $index, ?string $selector = null): NodeFilter
+    {
+        if (\is_null($selector)) {
+            if ($index > $this->count() - 1) {
+                return new NullNode();
+            }
+
+            return new self($this->nodes->item($index));
+        }
+
+        return $this->querySelector($selector)->nth($index);
     }
 
     public function querySelector(string $selector): NodeFilter

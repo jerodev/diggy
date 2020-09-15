@@ -28,7 +28,7 @@ final class NullNode implements NodeFilter
         return false;
     }
 
-    public function first(): NodeFilter
+    public function first(?string $selector = null): NodeFilter
     {
         return $this;
     }
@@ -38,12 +38,12 @@ final class NullNode implements NodeFilter
         return null;
     }
 
-    public function last(): NodeFilter
+    public function last(?string $selector = null): NodeFilter
     {
         return $this;
     }
 
-    public function nth(int $index): NodeFilter
+    public function nth(int $index, ?string $selector = null): NodeFilter
     {
         return $this;
     }
