@@ -18,7 +18,7 @@ final class NullNode implements NodeFilter
     /**
      * @inheritDoc
      */
-    public function each($selector = null, ?Closure $closure = null): array
+    public function each($selector = null, ?Closure $closure = null, ?int $max = null): array
     {
         return [];
     }
@@ -33,7 +33,7 @@ final class NullNode implements NodeFilter
         return $this;
     }
 
-    public function getAttribute(string $name): ?string
+    public function attribute(string $name): ?string
     {
         return null;
     }
@@ -53,7 +53,7 @@ final class NullNode implements NodeFilter
         return $this;
     }
 
-    public function text(): ?string
+    public function text(?string $selector = null): ?string
     {
         return null;
     }

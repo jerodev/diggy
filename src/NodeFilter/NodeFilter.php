@@ -7,6 +7,14 @@ use Closure;
 interface NodeFilter
 {
     /**
+     * Get the value for the requested attribute of the first node in the current collection.
+     *
+     * @param string $name
+     * @return string|null
+     */
+    public function attribute(string $name): ?string;
+
+    /**
      * Returns the number of nodes in the current collection.
      *
      * @return int
@@ -19,9 +27,10 @@ interface NodeFilter
      *
      * @param Closure|string|null $selector
      * @param Closure|null $closure
+     * @param int|null $max Optional, The maximum number of nodes to loop over.
      * @return array
      */
-    public function each($selector = null, ?Closure $closure = null): array;
+    public function each($selector = null, ?Closure $closure = null, ?int $max = null): array;
 
     /**
      * Indicates whether a certain node exists.
@@ -38,14 +47,6 @@ interface NodeFilter
      * @return NodeFilter
      */
     public function first(?string $selector = null): NodeFilter;
-
-    /**
-     * Get the value for the requested attribute of the first node in the current collection.
-     *
-     * @param string $name
-     * @return string|null
-     */
-    public function getAttribute(string $name): ?string;
 
     /**
      * Create a new collection of nodes only containing the last node of the current collection.
@@ -78,9 +79,10 @@ interface NodeFilter
      * Returns the text content of the first node in the current collection.
      * Empty strings are converted to `null`.
      *
+     * @param string|null $selector Optional selector for the node to get text from.
      * @return string|null
      */
-    public function text(): ?string;
+    public function text(?string $selector = null): ?string;
 
     /**
      * Returns the text content of all nodes in the current collection.

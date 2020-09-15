@@ -93,8 +93,8 @@ final class NodeCollectionTest extends TestCase
     {
         $nodes = $this->node->querySelector('input[type=email]');
 
-        $this->assertEquals('email', $nodes->getAttribute('type'));
-        $this->assertNull($nodes->getAttribute('id'));
+        $this->assertEquals('email', $nodes->attribute('type'));
+        $this->assertNull($nodes->attribute('id'));
     }
 
     /** @test */

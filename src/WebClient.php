@@ -23,6 +23,9 @@ final class WebClient
         ], $guzzleConfig);
 
         $this->client = new Client($config);
+
+        // https://www.php.net/manual/en/function.libxml-use-internal-errors.php
+        \libxml_use_internal_errors(true);
     }
 
     public function get(string $url): NodeFilter

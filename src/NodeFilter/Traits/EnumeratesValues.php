@@ -18,10 +18,15 @@ trait EnumeratesValues
      * @param DOMNodeList $nodes
      * @param Closure|string|null $selector
      * @param Closure|null $closure
+     * @param int|null $max
      * @return array
      */
-    protected function internalEach(DOMNodeList $nodes, $selector = null, ?Closure $closure = null): array
+    protected function internalEach(DOMNodeList $nodes, $selector = null, ?Closure $closure = null, ?int $max = null): array
     {
+        if ($max !== null && $max <= 0) {
+            return [];
+        }
+
         if (\is_string($selector)) {
             $nodes = $this->internalQuerySelector($nodes, $selector);
         } else if ($selector instanceof Closure) {
@@ -36,6 +41,10 @@ trait EnumeratesValues
                 $values[] = $closure(new NodeCollection($node));
             } else {
                 $values[] = new NodeCollection($node);
+            }
+
+            if ($max !== null && --$max <= 0) {
+                break;
             }
         }
 
@@ -67,11 +76,11 @@ trait EnumeratesValues
     }
 
     /**
-     * @param DOMNode|DOMNodeList $nodes
+     * @param DOMNodeList $nodes
      * @param string $selector
      * @return NodeFilter
      */
-    protected function internalQuerySelector($nodes, string $selector): NodeFilter
+    protected function internalQuerySelector(DOMNodeList $nodes, string $selector): NodeFilter
     {
         return $this->internalXpath(
             $nodes,
@@ -84,7 +93,7 @@ trait EnumeratesValues
      * @param string $expression
      * @return NodeFilter
      */
-    protected function internalXpath($nodes, string $expression): NodeFilter
+    protected function internalXpath(DOMNodeList $nodes, string $expression): NodeFilter
     {
         $newDoc = new DOMDocument();
 

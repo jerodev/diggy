@@ -40,9 +40,9 @@ final class NodeCollection implements NodeFilter
         return $this->nodes->length;
     }
 
-    public function each($selector = null, ?Closure $closure = null): array
+    public function each($selector = null, ?Closure $closure = null, ?int $max = null): array
     {
-        return $this->internalEach($this->nodes, $selector, $closure);
+        return $this->internalEach($this->nodes, $selector, $closure, $max);
     }
 
     public function exists(?string $selector = null): bool
@@ -63,7 +63,7 @@ final class NodeCollection implements NodeFilter
         return $this->querySelector($selector)->first();
     }
 
-    public function getAttribute(string $name): ?string
+    public function attribute(string $name): ?string
     {
         $node = $this->nodes->item(0);
         if (! $node->hasAttributes()) {
@@ -105,8 +105,12 @@ final class NodeCollection implements NodeFilter
         return $this->internalQuerySelector($this->nodes, $selector);
     }
 
-    public function text(): ?string
+    public function text(?string $selector = null): ?string
     {
+        if ($selector) {
+            return $this->querySelector($selector)->text();
+        }
+
         $content = $this->nodes->item(0)->textContent;
         if (empty($content)) {
             return null;

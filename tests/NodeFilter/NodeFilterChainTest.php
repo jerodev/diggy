@@ -82,7 +82,7 @@ final class NodeFilterChainTest extends TestCase
                 ['querySelector', ['input']],
                 ['whereHasAttribute', ['type']],
                 ['nth', [1]],
-                ['getAttribute', ['type']],
+                ['attribute', ['type']],
             ]
         ];
     }
