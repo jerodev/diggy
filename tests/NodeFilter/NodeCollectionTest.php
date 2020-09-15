@@ -102,7 +102,7 @@ final class NodeCollectionTest extends TestCase
     {
         $this->assertEquals(
             'one',
-            $this->node->querySelector('li')->first(null)->text()
+            $this->node->querySelector('li')->first()->text()
         );
     }
 
