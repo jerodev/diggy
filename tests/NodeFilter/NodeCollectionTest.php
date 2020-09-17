@@ -153,6 +153,20 @@ final class NodeCollectionTest extends TestCase
     }
 
     /** @test */
+    public function it_should_iterate_nodes(): void
+    {
+        $this->assertEquals(
+            ['one', 'two', 'four'],
+            $this->node->each('li:not([class])', static fn (NodeFilter $n) => $n->text())
+        );
+
+        $this->assertEquals(
+            ['one', 'two', 'three', 'four'],
+            $this->node->querySelector('li')->each(static fn (NodeFilter $n) => $n->text())
+        );
+    }
+
+    /** @test */
     public function it_should_select_using_query_selector(): void
     {
         $nodes = $this->node->querySelector('li');

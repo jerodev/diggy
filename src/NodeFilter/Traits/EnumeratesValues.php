@@ -28,8 +28,10 @@ trait EnumeratesValues
         }
 
         if (\is_string($selector)) {
-            $nodes = $this->internalQuerySelector($nodes, $selector);
-        } else if ($selector instanceof Closure) {
+            return $this->internalQuerySelector($nodes, $selector)->each(null, $closure, $max);
+        }
+
+        if ($selector instanceof Closure) {
             $closure = $selector;
         }
 
