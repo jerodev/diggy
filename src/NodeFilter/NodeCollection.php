@@ -87,6 +87,11 @@ final class NodeCollection implements NodeFilter
         return $this->querySelector($selector)->last();
     }
 
+    public function nodeName(): ?string
+    {
+        return $this->nodes->item(0)->nodeName;
+    }
+
     public function nth(int $index, ?string $selector = null): NodeFilter
     {
         if (\is_null($selector)) {

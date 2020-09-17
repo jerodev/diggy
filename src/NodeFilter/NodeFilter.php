@@ -57,6 +57,14 @@ interface NodeFilter
     public function last(?string $selector = null): NodeFilter;
 
     /**
+     * Returns the name of the current node.
+     * If multiple nodes are selected, returns the name of the first node.
+     *
+     * @return string|null
+     */
+    public function nodeName(): ?string;
+
+    /**
      * Create a new collection of nodes only containing the n'th node of the current collection.
      * The index of the first element is 0.
      * If the given index is out of bounds, a NullNode object will be returned.

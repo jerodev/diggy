@@ -43,6 +43,11 @@ final class NullNode implements NodeFilter
         return $this;
     }
 
+    public function nodeName(): ?string
+    {
+        return null;
+    }
+
     public function nth(int $index, ?string $selector = null): NodeFilter
     {
         return $this;
