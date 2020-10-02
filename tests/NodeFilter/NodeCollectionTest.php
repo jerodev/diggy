@@ -4,6 +4,7 @@ namespace Jerodev\Diggy\Tests\NodeFilter;
 
 use DOMDocument;
 use DOMNodeList;
+use Jerodev\Diggy\Exceptions\InvalidQuerySelectorException;
 use Jerodev\Diggy\NodeFilter\NodeCollection;
 use Jerodev\Diggy\NodeFilter\NodeFilter;
 use PHPUnit\Framework\TestCase;
@@ -172,6 +173,14 @@ final class NodeCollectionTest extends TestCase
         $nodes = $this->node->querySelector('li');
 
         $this->assertEquals(4, $nodes->count());
+    }
+
+    /** @test */
+    public function it_should_throw_an_exception_on_invalid_query_selector(): void
+    {
+        $this->expectException(InvalidQuerySelectorException::class);
+
+        $this->node->querySelector('abc[a]def');
     }
 
     private function createDOMNodes(): DOMNodeList

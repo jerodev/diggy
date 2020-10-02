@@ -7,10 +7,12 @@ use DOMDocument;
 use DOMNode;
 use DOMNodeList;
 use DOMXPath;
+use Jerodev\Diggy\Exceptions\InvalidQuerySelectorException;
 use Jerodev\Diggy\NodeFilter\NodeCollection;
 use Jerodev\Diggy\NodeFilter\NodeFilter;
 use Jerodev\Diggy\NodeFilter\NullNode;
 use Symfony\Component\CssSelector\CssSelectorConverter;
+use Symfony\Component\CssSelector\Exception\SyntaxErrorException;
 
 trait EnumeratesValues
 {
@@ -84,10 +86,13 @@ trait EnumeratesValues
      */
     protected function internalQuerySelector(DOMNodeList $nodes, string $selector): NodeFilter
     {
-        return $this->internalXpath(
-            $nodes,
-            (new CssSelectorConverter())->toXPath($selector)
-        );
+        try {
+            $xpath = (new CssSelectorConverter())->toXPath($selector);
+        } catch (SyntaxErrorException $e) {
+            throw new InvalidQuerySelectorException($selector, $e);
+        }
+
+        return $this->internalXpath($nodes, $xpath);
     }
 
     /**
