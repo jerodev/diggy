@@ -49,6 +49,14 @@ interface NodeFilter
     public function first(?string $selector = null): NodeFilter;
 
     /**
+     * Determine if the first element in the collection is a node with a determined name.
+     *
+     * @param string $nodeName
+     * @return bool
+     */
+    public function is(string $nodeName): bool;
+
+    /**
      * Create a new collection of nodes only containing the last node of the current collection.
      *
      * @param string|null $selector

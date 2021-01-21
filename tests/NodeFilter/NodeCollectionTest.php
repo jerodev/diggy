@@ -21,11 +21,18 @@ final class NodeCollectionTest extends TestCase
     }
 
     /** @test */
-    public function it_should_check_if_node_exists(): void
+    public function it_should_assert_if_node_exists(): void
     {
         $this->assertTrue($this->node->exists());
         $this->assertTrue($this->node->exists('li.third'));
         $this->assertFalse($this->node->exists('li.forth'));
+    }
+
+    /** @test */
+    public function it_should_assert_if_node_is_node_name(): void
+    {
+        $this->assertTrue($this->node->querySelector('li.third')->is('li'));
+        $this->assertFalse($this->node->querySelector('li')->is('div'));
     }
 
     /** @test */

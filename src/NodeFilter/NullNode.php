@@ -10,6 +10,11 @@ use Closure;
  */
 final class NullNode implements NodeFilter
 {
+    public function attribute(string $name): ?string
+    {
+        return null;
+    }
+
     public function count(): int
     {
         return 0;
@@ -33,9 +38,9 @@ final class NullNode implements NodeFilter
         return $this;
     }
 
-    public function attribute(string $name): ?string
+    public function is(string $nodeName): bool
     {
-        return null;
+        return false;
     }
 
     public function last(?string $selector = null): NodeFilter

@@ -41,6 +41,12 @@ final class NullNodeTest extends TestCase
     }
 
     /** @test */
+    public function it_should_return_false_on_is(): void
+    {
+        $this->assertFalse($this->node->is('div'));
+    }
+
+    /** @test */
     public function it_should_return_null_node_on_has_attribute(): void
     {
         $this->assertInstanceOf(

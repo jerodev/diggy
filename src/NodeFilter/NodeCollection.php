@@ -35,6 +35,21 @@ final class NodeCollection implements NodeFilter
         $this->nodes = $nodes;
     }
 
+    public function attribute(string $name): ?string
+    {
+        $node = $this->nodes->item(0);
+        if (! $node->hasAttributes()) {
+            return null;
+        }
+
+        $attribute = $node->attributes->getNamedItem($name);
+        if (\is_null($attribute)) {
+            return null;
+        }
+
+        return $attribute->nodeValue;
+    }
+
     public function count(): int
     {
         return $this->nodes->length;
@@ -63,19 +78,9 @@ final class NodeCollection implements NodeFilter
         return $this->querySelector($selector)->first();
     }
 
-    public function attribute(string $name): ?string
+    public function is(string $nodeName): bool
     {
-        $node = $this->nodes->item(0);
-        if (! $node->hasAttributes()) {
-            return null;
-        }
-
-        $attribute = $node->attributes->getNamedItem($name);
-        if (\is_null($attribute)) {
-            return null;
-        }
-
-        return $attribute->nodeValue;
+        return \strtolower($this->nodeName()) === \strtolower($nodeName);
     }
 
     public function last(?string $selector = null): NodeFilter

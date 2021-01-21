@@ -28,7 +28,7 @@ final class NodeFilterChainTest extends TestCase
      * @test
      * @dataProvider functionProvider
      */
-    public function it_should_chain_functions(?string $expectedText, array $functions): void
+    public function it_should_chain_functions($expectedText, array $functions): void
     {
         $node = new NodeCollection($this->createDOMNodes());
 
@@ -83,6 +83,14 @@ final class NodeFilterChainTest extends TestCase
                 ['whereHasAttribute', ['type']],
                 ['nth', [1]],
                 ['attribute', ['type']],
+            ]
+        ];
+
+        yield [
+            true,
+            [
+                ['querySelector', ['div p']],
+                ['is', ['p']],
             ]
         ];
     }
