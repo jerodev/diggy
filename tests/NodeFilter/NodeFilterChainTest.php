@@ -27,6 +27,8 @@ final class NodeFilterChainTest extends TestCase
     /**
      * @test
      * @dataProvider functionProvider
+     * @param bool|string|null $expectedText
+     * @param array $functions
      */
     public function it_should_chain_functions($expectedText, array $functions): void
     {
