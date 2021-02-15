@@ -32,21 +32,116 @@ var_dump($page->first('#social')->querySelector('a span')->texts());
 These are the available functions on a `NodeCollection` object. All functions that do not return a native value can be
 chained without having to worry if there are nodes in the collection or not.
 
-| Function  | Description | Example |
-| ------------- | ------------- | ------------- |
-| `attribute(string $name)` | Returns the value of the attribute if available. | `$nodes->attribute('href')` |
-| `count()` | Returns the number of elements in the current node collection. | `$nodes->count()` |
-| `each()` | Loops over all dom elements in the current collection and returns an array of values returned by the callback function. | `$nodes->each('a', static fn (NodeFilter $a) => $a->attribute('href'))` |
-| `exists(?string $selector)` | Indicates if any element exists in the collection. If a `$selector` is provided, the collection is first filtered by this selector. | `$nodes->exists('a.active')` |
-| `first(?string $selector)` | Create a new node collection with only the first element of the current collection. If a `$selector` is provided, the collection is first filtered by this selector. | `$nodes->first('a.active')` |
-| `is(string $nodeName)` | Indicates if the first node in the collection is a node with a specific tag name. | `$nodes->is('div')` |
-| `last(?string $selector)` | Create a new node collection with only the last element of the current collection. If a `$selector` is provided, the collection is first filtered by this selector. | `$nodes->last('a.active')` |
-| `nodeName()` | Returns the tag name of the first element in the collection. | `$nodes->nodeName()` |
-| `nth(int $index, ?string $selector)` | Create a new node collection with only the nth element of the current collection starting at 0. If a `$selector` is provided, the collection is first filtered by this selector. | `$nodes->nth(1, 'a.active')` |
-| `querySelector(string $selector)` | Filter the current node collection by a given css selector. | `$nodes->querySelector('.active')` |
-| `text(?string $selector)` | Returns the inner text from the first element in the collection. If a `$selector` is provided, the collection is first filtered by this selector. | `$nodes->text()` |
-| `texts()` | Returns an array of strings with all inner texts of the nodes in the collection. | `$nodes->text()` |
-| `whereHas(closure $closure)` | Filters the node collection to elements that pass the given closure. | `$nodes->whereHas(static fn (NodeFilter $node) => $node->text() === 'foo')` |
-| `whereHasAttribute(string $key, ?string $value)` | Filters the node collection by elements that have a certain attribute. If a `$value` is provided the collection is also filtered by elements where the attribute has this value. | `$nodes->whereHasAttribute('href')` |
-| `whereHasText(string $value)` | Filters the node collection by elements that have a value in their inner text. | `$nodes->whereHasText('foo')` |
-| `xPath(string $selector)` | Filter the current node collection by a given xpath selector. | `$nodes->xPath('//nav/a[@href]')` |
+### `attribute(string $name)`
+Returns the value of the attribute of the first element in the collection if available.
+```php
+$nodes->attribute('href');
+```
+
+### `count()`
+Returns the number of elements in the current node collection.
+```php
+$nodes->count();
+```
+
+### `each(string $selector, closure $closure, ?int $max = null)`
+Loops over all dom elements in the current collection and executes a closure for each element.
+The return value of this function is an array of values returned from the closure.
+```php
+$nodes->each('a', static function (NodeFilter $node) {
+    return $a->attribute('href');
+});
+```
+
+### `exists(?string $selector = null)`
+Indicates if an element exists in the collection.
+If a selector is given, the current nodes will first be filtered.
+```php
+$nodes->exists('a.active');
+```
+
+### `first(?string $selector = null)`
+Returns the first element of the node collection.
+If a selector is given, the current nodes will first be filtered.
+```php
+$nodes->first('a.active');
+```
+
+### `is(string $nodeName)`
+Indicates if the first element in the current collection has a specified tag name.
+```php
+$nodes->is('div');
+```
+
+### `last(?string $selector = null)`
+Returns the last element of the node collection.
+If a selector is given, the current nodes will first be filtered.
+```php
+$nodes->last('a.active');
+```
+
+### `nodeName()`
+Returns the tag name of the first element in the current node collection
+```php
+$nodes->nodeName();
+```
+
+### `nth(int $index, ?string $selector = null)`
+Returns the nth element of the node collection, starting at `0`.
+If a selector is given, the current nodes will first be filtered.
+```php
+$nodes->nth(1, 'a.active');
+```
+
+### `querySelector(string $selector)`
+Finds all elements in the current node collection matching this css query selector.
+```php
+$nodes->querySelector('a.active');
+```
+
+### `text(?string $selector = null)`
+Returns the inner text of the first element in the node collection.
+If a selector is given, the current nodes will first be filtered.
+```php
+$nodes->text('p.description');
+```
+
+### `texts()`
+Returns an array containing the inner text of every root element in the collection.
+```php
+$nodes->texts('nav > a');
+```
+
+### `whereHas(closure $closure)`
+Filters the current node collection based on a given closure.
+```php
+$nodes->whereHas(static function (NodeFilter $node) {
+    return $node->text() === 'foo';
+});
+```
+
+### `whereHasAttribute(string $key, ?string $value = null)`
+Filters the current node collection by the existence of a specific attribute.
+If a value is given the collection is also filtered by the value of this attribute.
+```php
+$nodes->whereHasAttribute('href');
+```
+
+### `whereHasText(?string $value = null, bool $trim = true, bool $exact = false)`
+Filters the current node collection by the existence of inner text.
+Setting a value will also filter the nodes by the actual inner text based on `$trim` and `$exact`.
+
+| option | function |
+|---|---|
+| `$trim` | Indicates the inner text value should be trimmed before matches with `$value`. |
+| `$exact` | Indicates the inner text value should match `$value` exactly. |
+
+```php
+$nodes->whereHasText('foo');
+```
+
+### `xPath(string $selector)`
+Finds all elements in the current node collection matching this xpath query selector.
+```php
+$nodes->xPath('//nav/a[@href]');
+```
