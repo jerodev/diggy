@@ -1,6 +1,6 @@
 # Diggy web scraper
 
-![PHP tests](https://github.com/jerodev/diggy/workflows/PHP%20tests/badge.svg)
+![PHP tests](https://github.com/jerodev/diggy/workflows/PHP%20tests/badge.svg) [![Latest Stable Version](https://poser.pugx.org/jerodev/diggy/v)](//packagist.org/packages/jerodev/diggy)
 
 Diggy is a simple wrapper around the [PHP DOM extension](https://www.php.net/manual/en/intro.dom.php) that allow finding
 elements using simple query selectors and fail proof chaining.
