@@ -185,8 +185,8 @@ final class NodeCollection implements NodeFilter
         });
     }
 
-    public function xPath(string $expression): NodeFilter
+    public function xPath(string $selector): NodeFilter
     {
-        return $this->internalXpath($this->nodes, $expression);
+        return $this->internalXpath($this->nodes, $selector);
     }
 }
