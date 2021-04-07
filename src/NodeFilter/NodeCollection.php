@@ -69,6 +69,19 @@ final class NodeCollection implements NodeFilter
         return $this->querySelector($selector)->exists();
     }
 
+    public function filter(Closure $closure): NodeFilter
+    {
+        $newDoc = new DOMDocument();
+
+        foreach ($this->nodes as $node) {
+            if ($closure(new NodeCollection($node)) && ($newNode = $newDoc->importNode($node, true))) {
+                $newDoc->appendChild($newNode);
+            }
+        }
+
+        return new NodeCollection($newDoc->childNodes);
+    }
+
     public function first(?string $selector = null): NodeFilter
     {
         if (\is_null($selector)) {

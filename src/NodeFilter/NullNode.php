@@ -33,6 +33,11 @@ final class NullNode implements NodeFilter
         return false;
     }
 
+    public function filter(Closure $closure): NodeFilter
+    {
+        return $this;
+    }
+
     public function first(?string $selector = null): NodeFilter
     {
         return $this;
