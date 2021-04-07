@@ -41,6 +41,15 @@ interface NodeFilter
     public function exists(?string $selector = null): bool;
 
     /**
+     * Filter a list of nodes using a closure that returns a boolean.
+     * The closure gets passed a node filter to test upon.
+     *
+     * @param Closure $closure
+     * @return NodeFilter
+     */
+    public function filter(Closure $closure): NodeFilter;
+
+    /**
      * Create a new collection of nodes only containing the first node of the current collection.
      *
      * @param string|null $selector
