@@ -6,6 +6,7 @@ use DOMDocument;
 use DOMNodeList;
 use Generator;
 use Jerodev\Diggy\NodeFilter\NodeCollection;
+use Jerodev\Diggy\NodeFilter\NodeFilter;
 use PHPUnit\Framework\TestCase;
 
 final class NodeFilterChainTest extends TestCase
@@ -93,6 +94,15 @@ final class NodeFilterChainTest extends TestCase
             [
                 ['querySelector', ['div p']],
                 ['is', ['p']],
+            ]
+        ];
+
+        yield [
+            'two',
+            [
+                ['querySelector', ['ul li']],
+                ['filter', [static fn (NodeFilter $node) => $node->text() === 'two']],
+                ['text']
             ]
         ];
     }
