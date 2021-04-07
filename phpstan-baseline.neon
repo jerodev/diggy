@@ -7,6 +7,6 @@ parameters:
 
 		-
 			message: "#^Right side of && is always true\\.$#"
-			count: 2
+			count: 3
 			path: src/NodeFilter/NodeCollection.php
 
