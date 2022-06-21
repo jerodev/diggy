@@ -18,7 +18,9 @@ object. However, you can use any webclient you prefer and pass a `DOMNode` or `D
 ```php
 $client = new \Jerodev\Diggy\WebClient();
 $page = $client->get('https://www.deviaene.eu/');
-var_dump($page->first('#social')->querySelector('a span')->texts());
+
+$socials = $page->first('#social')->querySelector('a span')->texts();
+var_dump($socials);
 
 //    [
 //        'GitHub',
