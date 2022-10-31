@@ -15,11 +15,9 @@ final class NodeCollection implements NodeFilter
     private DOMNodeList $nodes;
 
     /**
-     * @param DOMNode|DOMNodeList $nodes
-     *
      * @throws Exception When node could not be imported into a new document.
      */
-    public function __construct($nodes)
+    public function __construct(DOMNode|DOMNodeList $nodes)
     {
         if ($nodes instanceof DOMNode) {
             $doc = new DOMDocument();
