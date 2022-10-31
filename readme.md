@@ -7,7 +7,7 @@ elements using simple query selectors and fail proof chaining.
 
 ## Requirements
 
- - PHP 7.4 or PHP 8.0
+ - PHP 8.1
 
 ## Getting started
 
