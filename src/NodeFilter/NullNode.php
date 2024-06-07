@@ -98,9 +98,9 @@ final class NullNode implements NodeFilter
         return $this;
     }
 
-    public function current(): mixed
+    public function current(): NodeFilter
     {
-        return null;
+        return $this;
     }
 
     public function next(): void

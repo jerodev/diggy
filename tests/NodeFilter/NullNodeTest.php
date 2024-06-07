@@ -17,6 +17,17 @@ final class NullNodeTest extends TestCase
     }
 
     /** @test */
+    public function it_should_iterate_zero_times(): void
+    {
+        $count = 0;
+        foreach ($this->node as $n) {
+            $count += $n->count() + 1;
+        }
+
+        $this->assertEquals(0, $count);
+    }
+
+    /** @test */
     public function it_should_return_empty_array_on_each(): void
     {
         $this->assertEquals(

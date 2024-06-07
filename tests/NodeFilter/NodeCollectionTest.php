@@ -224,4 +224,15 @@ final class NodeCollectionTest extends TestCase
 
         return $doc->childNodes;
     }
+
+    /** @test */
+    public function it_should_iterate_zero_times(): void
+    {
+        $text = '';
+        foreach ($this->node->querySelector('li') as $t) {
+            $text .= $t->text();
+        }
+
+        $this->assertEquals('onetwothreefour', $text);
+    }
 }
