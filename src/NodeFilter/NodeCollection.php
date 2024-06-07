@@ -7,7 +7,6 @@ use DOMDocument;
 use DOMNode;
 use DOMNodeList;
 use Exception;
-use Jerodev\Diggy\Exceptions\InvalidQuerySelectorException;
 
 final class NodeCollection implements NodeFilter
 {

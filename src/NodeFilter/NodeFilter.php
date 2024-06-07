@@ -3,7 +3,6 @@
 namespace Jerodev\Diggy\NodeFilter;
 
 use Closure;
-use Jerodev\Diggy\Exceptions\InvalidQuerySelectorException;
 
 interface NodeFilter
 {
