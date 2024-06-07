@@ -3,11 +3,12 @@ includes:
 
 parameters:
 
-	level: 7
+    level: 7
 
-	paths:
-		- src
-		- tests
+    paths:
+        - src
+        - tests
 
-	checkGenericClassInNonGenericObjectType: false
-	checkMissingIterableValueType: false
+    ignoreErrors:
+        - identifier: missingType.generics
+        - identifier: missingType.iterableValue

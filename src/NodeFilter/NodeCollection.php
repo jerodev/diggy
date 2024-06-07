@@ -143,7 +143,7 @@ final class NodeCollection implements NodeFilter
 
     public function texts(): array
     {
-        return $this->each(static fn (NodeCollection $n) => $n->text());
+        return $this->each(static fn (NodeFilter $n) => $n->text());
     }
 
     public function whereHas(Closure $closure): NodeFilter
@@ -193,7 +193,7 @@ final class NodeCollection implements NodeFilter
                 return $text === $value;
             }
 
-            return \strpos($text, $value) !== false;
+            return \str_contains($text, $value);
         });
     }
 

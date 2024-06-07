@@ -17,11 +17,12 @@ use Symfony\Component\CssSelector\Exception\SyntaxErrorException;
 trait EnumeratesValues
 {
     /**
+     * @template T
      * @param DOMNodeList $nodes
-     * @param Closure|string|null $selector
-     * @param Closure|null $closure
+     * @param Closure(NodeFilter, int):T|string|null $selector
+     * @param Closure(NodeFilter, int):T|null $closure
      * @param int|null $max
-     * @return array
+     * @return ($closure is Closure ? array<T> : ($selector is Closure ? array<T> : array<NodeFilter>))
      */
     protected function internalEach(DOMNodeList $nodes, $selector = null, ?Closure $closure = null, ?int $max = null): array
     {
@@ -38,11 +39,12 @@ trait EnumeratesValues
         }
 
         $values = [];
+        $index = 0;
         foreach ($nodes as $node) {
             \assert($node instanceof DOMNode);
 
             if ($closure instanceof Closure) {
-                $values[] = $closure(new NodeCollection($node));
+                $values[] = $closure(new NodeCollection($node), $index++);
             } else {
                 $values[] = new NodeCollection($node);
             }
@@ -59,7 +61,7 @@ trait EnumeratesValues
      * filter nodes directly on DOMNode level
      *
      * @param DOMNodeList $nodes
-     * @param Closure $callback
+     * @param Closure(DOMNode):bool $callback
      * @return NodeFilter
      */
     protected function internalFilter(DOMNodeList $nodes, Closure $callback): NodeFilter

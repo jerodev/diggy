@@ -16,7 +16,7 @@ final class NodeCollectionTest extends TestCase
     protected function setUp(): void
     {
         $this->node = new NodeCollection(
-            $this->createDOMNodes()
+            $this->createDOMNodes(),
         );
     }
 
@@ -110,7 +110,7 @@ final class NodeCollectionTest extends TestCase
     {
         $this->assertEquals(
             'one',
-            $this->node->querySelector('li')->first()->text()
+            $this->node->querySelector('li')->first()->text(),
         );
     }
 
@@ -119,7 +119,7 @@ final class NodeCollectionTest extends TestCase
     {
         $this->assertEquals(
             'four',
-            $this->node->querySelector('li')->last()->text()
+            $this->node->querySelector('li')->last()->text(),
         );
     }
 
@@ -128,7 +128,7 @@ final class NodeCollectionTest extends TestCase
     {
         $this->assertEquals(
             'two',
-            $this->node->querySelector('li')->nth(1)->text()
+            $this->node->querySelector('li')->nth(1)->text(),
         );
     }
 
@@ -137,12 +137,12 @@ final class NodeCollectionTest extends TestCase
     {
         $this->assertEquals(
             'one',
-            $this->node->querySelector('li')->text()
+            $this->node->querySelector('li')->text(),
         );
 
         $this->assertEquals(
             'three',
-            $this->node->querySelector('li.third')->text()
+            $this->node->querySelector('li.third')->text(),
         );
     }
 
@@ -151,12 +151,12 @@ final class NodeCollectionTest extends TestCase
     {
         $this->assertEquals(
             ['one', 'two', 'three', 'four'],
-            $this->node->querySelector('li')->texts()
+            $this->node->querySelector('li')->texts(),
         );
 
         $this->assertEquals(
             ['three'],
-            $this->node->querySelector('li.third')->texts()
+            $this->node->querySelector('li.third')->texts(),
         );
     }
 
@@ -165,13 +165,25 @@ final class NodeCollectionTest extends TestCase
     {
         $this->assertEquals(
             ['one', 'two', 'four'],
-            $this->node->each('li:not([class])', static fn (NodeFilter $n) => $n->text())
+            $this->node->each('li:not([class])', static fn (NodeFilter $n) => $n->text()),
         );
 
         $this->assertEquals(
             ['one', 'two', 'three', 'four'],
-            $this->node->querySelector('li')->each(static fn (NodeFilter $n) => $n->text())
+            $this->node->querySelector('li')->each(static fn (NodeFilter $n) => $n->text()),
         );
+
+        $this->assertEquals(
+            [1, 2, 3, 4],
+            $this->node->querySelector('li')->each(static fn (NodeFilter $_, int $i) => $i+1),
+        );
+
+        // No return type should not throw PHPStan error
+        $result = [];
+        $this->node->each('li', static function () use (&$result) {
+            $result[] = 0;
+        });
+        $this->assertEquals([0, 0, 0, 0], $result);
     }
 
     /** @test */
@@ -194,7 +206,7 @@ final class NodeCollectionTest extends TestCase
     {
         $html = <<<'HTML'
         <!DOCTYPE html>
-        <html>
+        <html lang="en">
             <body>
                 <div>
                     <p>Intro</p>

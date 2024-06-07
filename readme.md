@@ -62,6 +62,14 @@ If a selector is given, the current nodes will first be filtered.
 $nodes->exists('a.active');
 ```
 
+### `filter(closure $closure)`
+Filters the current node collection based on a given closure.
+```php
+$nodes->filter(static function (NodeFilter $node) {
+    return $node->text() === 'foo';
+});
+```
+
 ### `first(?string $selector = null)`
 Returns the first element of the node collection.
 If a selector is given, the current nodes will first be filtered.
@@ -115,10 +123,10 @@ $nodes->texts('nav > a');
 ```
 
 ### `whereHas(closure $closure)`
-Filters the current node collection based on a given closure.
+Filter nodes that contain child nodes that fulfill the filter described by the closure
 ```php
 $nodes->whereHas(static function (NodeFilter $node) {
-    return $node->text() === 'foo';
+    return $node->first('a[href]');
 });
 ```
 
