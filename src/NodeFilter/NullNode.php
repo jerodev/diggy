@@ -97,4 +97,27 @@ final class NullNode implements NodeFilter
     {
         return $this;
     }
+
+    public function current(): NodeFilter
+    {
+        return $this;
+    }
+
+    public function next(): void
+    {
+    }
+
+    public function key(): int
+    {
+        return 0;
+    }
+
+    public function valid(): bool
+    {
+        return false;
+    }
+
+    public function rewind(): void
+    {
+    }
 }

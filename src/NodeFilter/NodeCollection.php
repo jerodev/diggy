@@ -13,6 +13,7 @@ final class NodeCollection implements NodeFilter
     use Traits\EnumeratesValues;
 
     private DOMNodeList $nodes;
+    private int $iteratorPosition = 0;
 
     /**
      * @throws Exception When node could not be imported into a new document.
@@ -199,5 +200,30 @@ final class NodeCollection implements NodeFilter
     public function xPath(string $selector): NodeFilter
     {
         return $this->internalXpath($this->nodes, $selector);
+    }
+
+    public function current(): NodeFilter
+    {
+        return $this->nth($this->iteratorPosition);
+    }
+
+    public function next(): void
+    {
+        $this->iteratorPosition++;
+    }
+
+    public function key(): int
+    {
+        return $this->iteratorPosition;
+    }
+
+    public function valid(): bool
+    {
+        return $this->current()->exists();
+    }
+
+    public function rewind(): void
+    {
+        $this->iteratorPosition = 0;
     }
 }
