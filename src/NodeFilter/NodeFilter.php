@@ -4,7 +4,7 @@ namespace Jerodev\Diggy\NodeFilter;
 
 use Closure;
 
-interface NodeFilter
+interface NodeFilter extends \ArrayAccess
 {
     /**
      * Get the value for the requested attribute of the first node in the current collection.

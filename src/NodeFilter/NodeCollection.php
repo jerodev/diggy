@@ -200,4 +200,30 @@ final class NodeCollection implements NodeFilter
     {
         return $this->internalXpath($this->nodes, $selector);
     }
+
+    public function offsetExists(mixed $offset): bool
+    {
+        return match (\gettype($offset)) {
+            'integer' => $this->nth($offset) instanceof NullNode,
+            default => false,
+        };
+    }
+
+    public function offsetGet(mixed $offset): ?NodeFilter
+    {
+        return match (\gettype($offset)) {
+            'integer' => $this->nth($offset),
+            default => null,
+        };
+    }
+
+    public function offsetSet(mixed $offset, mixed $value): void
+    {
+        // Can't set nodes on NodeCollection
+    }
+
+    public function offsetUnset(mixed $offset): void
+    {
+        // Can't set nodes on NodeCollection
+    }
 }
