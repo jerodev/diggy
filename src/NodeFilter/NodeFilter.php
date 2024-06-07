@@ -4,7 +4,8 @@ namespace Jerodev\Diggy\NodeFilter;
 
 use Closure;
 
-interface NodeFilter extends \ArrayAccess
+/** @extends \Iterator<int, NodeFilter> */
+interface NodeFilter extends \Iterator
 {
     /**
      * Get the value for the requested attribute of the first node in the current collection.

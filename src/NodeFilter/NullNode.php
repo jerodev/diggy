@@ -98,23 +98,26 @@ final class NullNode implements NodeFilter
         return $this;
     }
 
-    public function offsetExists(mixed $offset): bool
-    {
-        return false;
-    }
-
-    public function offsetGet(mixed $offset): mixed
+    public function current(): mixed
     {
         return null;
     }
 
-    public function offsetSet(mixed $offset, mixed $value): void
+    public function next(): void
     {
-        // Can't set nodes on NullNode
     }
 
-    public function offsetUnset(mixed $offset): void
+    public function key(): int
     {
-        // Can't set nodes on NullNode
+        return 0;
+    }
+
+    public function valid(): bool
+    {
+        return false;
+    }
+
+    public function rewind(): void
+    {
     }
 }

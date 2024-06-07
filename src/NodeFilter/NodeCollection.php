@@ -13,6 +13,7 @@ final class NodeCollection implements NodeFilter
     use Traits\EnumeratesValues;
 
     private DOMNodeList $nodes;
+    private int $iteratorPosition = 0;
 
     /**
      * @throws Exception When node could not be imported into a new document.
@@ -201,29 +202,28 @@ final class NodeCollection implements NodeFilter
         return $this->internalXpath($this->nodes, $selector);
     }
 
-    public function offsetExists(mixed $offset): bool
+    public function current(): NodeFilter
     {
-        return match (\gettype($offset)) {
-            'integer' => $this->nth($offset) instanceof NullNode,
-            default => false,
-        };
+        return $this->nth($this->iteratorPosition);
     }
 
-    public function offsetGet(mixed $offset): ?NodeFilter
+    public function next(): void
     {
-        return match (\gettype($offset)) {
-            'integer' => $this->nth($offset),
-            default => null,
-        };
+        $this->iteratorPosition++;
     }
 
-    public function offsetSet(mixed $offset, mixed $value): void
+    public function key(): int
     {
-        // Can't set nodes on NodeCollection
+        return $this->iteratorPosition;
     }
 
-    public function offsetUnset(mixed $offset): void
+    public function valid(): bool
     {
-        // Can't set nodes on NodeCollection
+        return $this->current()->exists();
+    }
+
+    public function rewind(): void
+    {
+        $this->iteratorPosition = 0;
     }
 }
