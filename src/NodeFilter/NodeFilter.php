@@ -3,6 +3,7 @@
 namespace Jerodev\Diggy\NodeFilter;
 
 use Closure;
+use Jerodev\Diggy\Exceptions\InvalidQuerySelectorException;
 
 interface NodeFilter
 {
@@ -25,10 +26,11 @@ interface NodeFilter
      * Filter the current nodes and pass them to a defined closure.
      * The closure will be passed each DomNode as a SingleNode object and can return any value from it.
      *
-     * @param Closure|string|null $selector
-     * @param Closure|null $closure
+     * @template T
+     * @param Closure(NodeFilter, int):T|string|null $selector
+     * @param Closure(NodeFilter, int):T|null $closure
      * @param int|null $max Optional, The maximum number of nodes to loop over.
-     * @return array
+     * @return ($closure is Closure ? array<T> : ($selector is Closure ? array<T> : array<NodeFilter>))
      */
     public function each($selector = null, ?Closure $closure = null, ?int $max = null): array;
 
@@ -44,7 +46,7 @@ interface NodeFilter
      * Filter a list of nodes using a closure that returns a boolean.
      * The closure gets passed a node filter to test upon.
      *
-     * @param Closure $closure
+     * @param Closure(NodeFilter):bool $closure
      * @return NodeFilter
      */
     public function filter(Closure $closure): NodeFilter;
@@ -112,15 +114,14 @@ interface NodeFilter
     /**
      * Returns the text content of all nodes in the current collection.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function texts(): array;
 
     /**
-     * Filter the current nodes by their child nodes.
-     * The closure gets a NodeFilter instance that can be used to define how the nodes should be filtered.
+     * Filter nodes that contain child nodes that fulfill the filter described by the closure
      *
-     * @param Closure $closure
+     * @param Closure(NodeFilter):NodeFilter $closure
      * @return NodeFilter
      */
     public function whereHas(Closure $closure): NodeFilter;
