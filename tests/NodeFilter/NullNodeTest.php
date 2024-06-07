@@ -2,7 +2,6 @@
 
 namespace Jerodev\Diggy\Tests\NodeFilter;
 
-use Jerodev\Diggy\NodeFilter\NodeCollection;
 use Jerodev\Diggy\NodeFilter\NodeFilter;
 use Jerodev\Diggy\NodeFilter\NullNode;
 use PHPUnit\Framework\TestCase;
@@ -21,7 +20,7 @@ final class NullNodeTest extends TestCase
     {
         $this->assertEquals(
             [],
-            $this->node->each('.foo', static fn (NodeCollection $n) => $n)
+            $this->node->each('.foo', static fn (NodeFilter $n) => $n),
         );
     }
 
@@ -30,7 +29,7 @@ final class NullNodeTest extends TestCase
     {
         $this->assertEquals(
             [],
-            $this->node->texts()
+            $this->node->texts(),
         );
     }
 
@@ -51,7 +50,7 @@ final class NullNodeTest extends TestCase
     {
         $this->assertInstanceOf(
             NullNode::class,
-            $this->node->whereHasAttribute('class')
+            $this->node->whereHasAttribute('class'),
         );
     }
 
@@ -60,7 +59,7 @@ final class NullNodeTest extends TestCase
     {
         $this->assertInstanceOf(
             NullNode::class,
-            $this->node->whereHasText('bar')
+            $this->node->whereHasText('bar'),
         );
     }
 
@@ -69,7 +68,7 @@ final class NullNodeTest extends TestCase
     {
         $this->assertInstanceOf(
             NullNode::class,
-            $this->node->querySelector('.foo')
+            $this->node->querySelector('.foo'),
         );
     }
 
@@ -78,7 +77,7 @@ final class NullNodeTest extends TestCase
     {
         $this->assertInstanceOf(
             NullNode::class,
-            $this->node->whereHas(static fn (NodeFilter $f) => $f->querySelector('.foo'))
+            $this->node->whereHas(static fn (NodeFilter $f) => $f->querySelector('.foo')),
         );
     }
 
@@ -87,7 +86,7 @@ final class NullNodeTest extends TestCase
     {
         $this->assertInstanceOf(
             NullNode::class,
-            $this->node->xPath('.foo')
+            $this->node->xPath('.foo'),
         );
     }
 
@@ -95,7 +94,7 @@ final class NullNodeTest extends TestCase
     public function it_should_return_null_on_get_attribute(): void
     {
         $this->assertNull(
-            $this->node->attribute('class')
+            $this->node->attribute('class'),
         );
     }
 
@@ -103,7 +102,7 @@ final class NullNodeTest extends TestCase
     public function it_should_return_null_on_text(): void
     {
         $this->assertNull(
-            $this->node->text()
+            $this->node->text(),
         );
     }
 }
